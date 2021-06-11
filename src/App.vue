@@ -2,31 +2,39 @@
 	<v-app>
 		<main>
 			<div class="app-container">
-        <v-card class="overflow-hidden">
-          <v-app-bar absolute color="#6A76AB" dark shrink-on-scroll prominent src="https://st.hzcdn.com/simgs/pictures/kitchens/kitchens-michael-alan-kaskel-img~0d511d8e0e77ab3a_14-3280-1-7aacee2.jpg" fade-img-on-scroll scroll-target="#scrolling-techniques-3">
-            <template v-slot:img="{ props }">
-              <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
-            </template>
-            <v-app-bar-title>My Shopping List</v-app-bar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar floating light max-width="25%" rounded collapse dense>
-              <v-text-field hide-details prepend-icon="search" v-on:keyup="filter" v-model="searchText"></v-text-field>
-            </v-toolbar>
-            <template v-slot:extension>
-              <v-tabs align-with-title>
-                <v-tab to="/" icon><v-icon>list</v-icon> List</v-tab>
-                <v-tab to="/addForm" icon><v-icon>add</v-icon> Add Item</v-tab>
-              </v-tabs>
-            </template>
-          </v-app-bar>
-          <v-sheet id="scrolling-techniques-3" class="overflow-y-auto" max-height="600">
+
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Shopping List</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li :class="{ active: activeTab === 'List' }" v-on:click="changeTab('List')">
+                  <router-link to="/"><span class="glyphicon glyphicon-list"></span> List</router-link>
+              </li>
+              <li :class="{ active: activeTab === 'AddItem' }" v-on:click="changeTab('AddItem')">
+                <router-link to="/addForm"><span class="glyphicon glyphicon-plus"></span>Add Item</router-link>
+              </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" name="search" v-on:keyup="filter" v-model="searchText">
+              </div>
+            </form>
+          </div>
+        </nav>
+
+
+        <div class="card overflow-hidden">
+
+          <div id="scrolling-techniques-3" class="overflow-y-auto" max-height="600">
             <!-- Extra space for the app bar -->
-            <v-container style="height: 250px;">
-            </v-container>
+            <div style="height: 40px;">
+            </div>
             <!-- Actual application -->
             <router-view></router-view>
-          </v-sheet>
-        </v-card>
+          </div>
+        </div>
 
         <!-- Loading bar that loads based on the property of loading in the store.
         It loads when the store is processing a server request -->
@@ -47,7 +55,8 @@ export default {
   name: "App",
   data() {
     return {
-      searchText: ""
+      searchText: "",
+      activeTab: "List",
     };
   },
   components:{
@@ -60,6 +69,9 @@ export default {
     ...mapActions(["filterItems"]),
     filter(){
       this.$store.dispatch("filterItems", this.searchText)
+    },
+    changeTab(text){
+      this.activeTab= text;
     }
   }
 };
@@ -73,7 +85,8 @@ light mint 99E1D9
 bisque F0F7F4
 dark mint 70ABAF
 light brown 705D56*/
-
+.router-link-exact-active {
+}
 *,
 *:before,
 *:after {
@@ -91,6 +104,7 @@ main {
   background: #fff;
   background-repeat: no-repeat;
   background-size: auto;
+  background: fixed;
   color: #444;
   background-image: url("https://i.pinimg.com/originals/d7/59/b5/d759b559ad669f9e199f1aaaa381a8ab.jpg");
 }

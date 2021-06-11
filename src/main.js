@@ -6,7 +6,10 @@ import ItemCard from './views/ItemCard'
 import store from './store/store';
 import addForm from './views/AddForm';
 import editForm from './views/EditForm';
+import 'bootstrap3/dist/css/bootstrap.min.css'
+import * as uiv from 'uiv'
 
+Vue.use(uiv)
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 const routes = [

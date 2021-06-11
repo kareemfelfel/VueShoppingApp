@@ -13,11 +13,11 @@
     <p>complete Items:</p>
     <v-divider></v-divider>
     <br>
-    <v-layout wrap>
-      <v-flex xs12 sm4 md3 v-for="item in completeItems" :key="item.id">
+    <div class="wrap">
+      <div class="col-xs-12 col-sm-4 col-md-3" v-for="item in completeItems" :key="item.id" style="margin: 10px;">
         <app-item :item="item" @completeThisItem="completeItem" @deleteItem="removeItem"></app-item>
-      </v-flex>
-    </v-layout>
+      </div>
+    </div>
   </v-container>
 </template>
 <script>
@@ -36,6 +36,7 @@ export default {
   },
   created() {
     this.loadAllItems();
+    this.activeTab= "List";
   },
   computed: {
     //all items

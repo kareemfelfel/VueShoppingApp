@@ -2,9 +2,9 @@
   <div class="form-wrapper">
     <!-- Display item when it is submitted and there is no error in the server request-->
     <v-container class="text-xs-center" v-if="!this.$store.state.error && submitted" v-model="submitted">
-      <h2>Make sure you don't forget anything!</h2>
+      <h4>Make sure you don't forget anything!</h4>
       <div class="details text-xs-left">
-        <h3 class="blue-grey--text">Item details</h3>
+        <h5 class="blue-grey--text">Item details</h5>
         <img :src="Form.img" height="250" width="250" style="border-radius: 30px;">
         <p><strong>Name:</strong> {{Form.name}}</p>
         <p><strong>quantity:</strong> {{Form.order}}</p>
@@ -71,7 +71,7 @@ export default {
       //if so, call revertCall to set it back to false
     },
     ...mapActions(["addToItems"]),
-  }
+  },
 };
 </script>
 
@@ -83,7 +83,7 @@ export default {
 .details {
   padding-top: 30px;
 }
-h3 {
+h5 {
   padding-bottom: 20px;
 }
 </style>
