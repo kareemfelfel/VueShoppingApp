@@ -1,7 +1,7 @@
 <template>
   <div class="form-wrapper">
-    <!-- Display item when it is submitted -->
-    <div class="text-xs-center" v-if="edited">
+    <!-- Display item when it is submitted and there is no error in the server request -->
+    <div class="text-xs-center" v-if="edited && !this.$store.state.error">
       <h2><v-icon color="green">done_all</v-icon> Your item has been updated!</h2>
       <div class="details text-xs-left">
         <h3 class="blue-grey--text">Item details</h3>
@@ -11,6 +11,7 @@
       </div>
       <v-btn to="/" color="success">Go to homepage</v-btn>
     </div>
+
     <v-form v-else v-model="valid">
       <!--Text fields for input name and image url-->
       <img :src="item.img" height="250" width="250" style="border-radius: 30px;">
@@ -37,7 +38,6 @@ export default {
   data: () => {
     return {
       //current form values
-
       edited: false,
       valid: true,
       //check if name is not empty and if it is type name is required

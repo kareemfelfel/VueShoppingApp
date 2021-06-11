@@ -1,6 +1,6 @@
 <template>
   <div class="form-wrapper">
-    <!-- Display item when it is submitted -->
+    <!-- Display item when it is submitted and there is no error in the server request-->
     <v-container class="text-xs-center" v-if="!this.$store.state.error && submitted" v-model="submitted">
       <h2>Make sure you don't forget anything!</h2>
       <div class="details text-xs-left">
@@ -21,22 +21,14 @@
       <br>
       <v-btn @click="submit" :disabled="!valid" color="success">Submit</v-btn>
     </v-form>
-    <loading-bar :dialog="this.$store.state.loading"></loading-bar>
-    <error-box></error-box>
   </div>
 </template>
 
 
 <script>
-import Loading from '../components/loading.vue';
-import ErrorBox from '../components/errorbox.vue';
 import { mask } from 'vue-the-mask';
 import { mapActions } from 'vuex';
 export default {
-  components:{
-    loadingBar: Loading,
-    errorBox: ErrorBox
-  },
   name: "Form",
   directives: {
     mask,

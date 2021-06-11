@@ -27,6 +27,12 @@
             <router-view></router-view>
           </v-sheet>
         </v-card>
+
+        <!-- Loading bar that loads based on the property of loading in the store.
+        It loads when the store is processing a server request -->
+        <loading-bar :dialog="this.$store.state.loading"></loading-bar>
+        <!-- Error box that displays an error when it occurs in the server -->
+        <error-box></error-box>
 			</div>
 		</main>
 	</v-app>
@@ -35,6 +41,8 @@
 
 <script>
 import { mapActions } from 'vuex';
+import Loading from "@/components/loading";
+import ErrorBox from "@/components/errorbox";
 export default {
   name: "App",
   data() {
@@ -42,7 +50,9 @@ export default {
       searchText: ""
     };
   },
-  components: {
+  components:{
+    loadingBar: Loading,
+    errorBox: ErrorBox
   },
   computed: {
   },

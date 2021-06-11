@@ -27,9 +27,6 @@ export default new Vuex.Store({
         editItem(state, payload) {
             Vue.set(state.Items, state.Items.findIndex(item => item.id == payload.id), payload);
         },
-        clearFavorites(state) {
-            state.favorites = [];
-        },
         removeItem(state, payload) {
             state.Items.splice(state.Items.indexOf(payload), 1);
         },
@@ -45,9 +42,6 @@ export default new Vuex.Store({
         getItem(state, payload){
             state.Item = payload;
         },
-        completeItem(state, payload){
-            Vue.set(state.Items, state.Items.findIndex(item => item.id == payload.id), payload);
-        },
         startLoading(state) {
             state.loading = true;
         },
@@ -57,26 +51,31 @@ export default new Vuex.Store({
     },
     actions: {
         removeItem({commit}, payload){
+            //start loading
+            commit("startLoading");
             axios.delete('http://localhost:3000/Items/' + payload.id)
                 .then(() => {
                     commit("removeItem", payload);
+                    commit("setError", false);
+                    commit("stopLoading");
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(() => {
+                    commit("setError", true);
+                    commit("stopLoading");
                 });
         },
         completeItem({commit}, payload){
+            commit("startLoading");
             axios.patch('http://localhost:3000/Items/' + payload.id, {complete: true})
                 .then((response) =>{
-                    console.log(response.data);
-                    commit("completeItem", response.data);
+                    commit("editItem", response.data);
+                    commit("setError", false);
+                    commit("stopLoading");
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(() => {
+                    commit("setError", true);
+                    commit("stopLoading");
                 });
-        },
-        clearFavorites({ commit }) {
-            commit("clearFavorites");
         },
         revertError({commit}){
             commit("revertError");
@@ -97,38 +96,42 @@ export default new Vuex.Store({
                 });
         },
         editItem({commit}, payload){
+            commit("startLoading");
             axios.put('http://localhost:3000/Items/' + payload.id, payload)
                 .then((response) => {
                     commit("editItem", response.data);
+                    commit("setError", false);
+                    commit("stopLoading");
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(() => {
+                    commit("setError", true);
+                    commit("stopLoading");
                 });
         },
         clearItems({commit}) {
             commit("clearItems");
         },
-        setItems({commit}, payload) {
-            commit("setItems", payload)
-        },
         //---------- Called from the home page at initial set up-------
-        loadAllItems() {
+        loadAllItems({commit}) {
             axios.get('http://localhost:3000/Items')
                 .then((response) => {
-                    this.dispatch("setItems", response.data);
+                    commit("setItems", response.data);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         },
         getItem({commit}, id){
+            commit("startLoading");
             axios.get('http://localhost:3000/Items/' + id)
                 .then((response) => {
-                    console.log(response.data);
                     commit("getItem", response.data)
+                    commit("setError", false);
+                    commit("stopLoading");
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(() => {
+                    commit("setError", true);
+                    commit("stopLoading");
                 });
         },
         filterItems({commit, state}, text){
