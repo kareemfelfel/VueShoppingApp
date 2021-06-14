@@ -22,7 +22,7 @@
     </div>
     <div v-else style="background-color: #c8c8c8; min-height: 170px;" >&nbsp;</div>
     <div class="myContainer">
-      <h4>{{ item.name }}<span class="font-weight-light">({{ item.order}})</span></h4>
+      <h4>{{ item.name }} <span>({{ item.order}})</span></h4>
       <p></p>
       <p class="text-center">
         <btn style="margin:5px;" class="btn btn-default btn-success" v-on:click="$emit('completeItem', item)" v-if="!item.complete"><span class="glyphicon glyphicon-ok" color="green"></span></btn>

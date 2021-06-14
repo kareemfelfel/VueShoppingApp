@@ -1,24 +1,24 @@
 <template>
-  <v-container grid-list-md fluid>
+  <div class="container-fluid">
     <p style="float: left">Incomplete Items:</p>
     <br>
-    <v-divider></v-divider>
+    <hr>
     <br>
-    <v-layout wrap>
-      <v-flex xs12 sm4 md3 v-for="item in incompleteItems" :key="item.id">
+    <div class="container-fluid text-center">
+      <div class="col-xs-12 col-sm-4 col-md-3" v-for="item in incompleteItems" :key="item.id">
         <app-item :item="item" @completeItem="completeItem" @deleteItem="removeItem"></app-item>
-      </v-flex>
-    </v-layout>
-    <br>
-    <p>complete Items:</p>
-    <v-divider></v-divider>
-    <br>
-    <div class="wrap">
-      <div class="col-xs-12 col-sm-4 col-md-3" v-for="item in completeItems" :key="item.id" style="margin: 10px;">
-        <app-item :item="item" @completeThisItem="completeItem" @deleteItem="removeItem"></app-item>
       </div>
     </div>
-  </v-container>
+    <br>
+    <p>complete Items:</p>
+    <hr>
+    <br>
+    <div class="container-fluid text-center">
+      <div class="col-xs-12 col-sm-4 col-md-3" v-for="item in completeItems" :key="item.id">
+        <app-item :item="item" @completeThisItem="completeItem" @deleteItem="removeItem" style="margin-bottom: 25px;"></app-item>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import Item from '../components/item.vue';
@@ -36,7 +36,7 @@ export default {
   },
   created() {
     this.loadAllItems();
-    this.activeTab= "List";
+    this.$emit("changeTab", "List");
   },
   computed: {
     //all items

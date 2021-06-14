@@ -1,5 +1,4 @@
 <template>
-	<v-app>
 		<main>
 			<div class="app-container">
 
@@ -32,7 +31,7 @@
             <div style="height: 40px;">
             </div>
             <!-- Actual application -->
-            <router-view></router-view>
+            <router-view @changeTab="changeTab"></router-view>
           </div>
         </div>
 
@@ -43,7 +42,6 @@
         <error-box></error-box>
 			</div>
 		</main>
-	</v-app>
 </template>
 
 
@@ -56,7 +54,7 @@ export default {
   data() {
     return {
       searchText: "",
-      activeTab: "List",
+      activeTab: "",
     };
   },
   components:{

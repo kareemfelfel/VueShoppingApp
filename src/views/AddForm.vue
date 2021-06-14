@@ -1,59 +1,61 @@
 <template>
   <div class="form-wrapper">
     <!-- Display item when it is submitted and there is no error in the server request-->
-    <v-container class="text-xs-center" v-if="!this.$store.state.error && submitted" v-model="submitted">
-      <h4>Make sure you don't forget anything!</h4>
-      <div class="details text-xs-left">
-        <h5 class="blue-grey--text">Item details</h5>
+    <div class="text-center" v-if="!this.$store.state.error && submitted">
+      <h2>Make sure you don't forget anything!</h2>
+      <div class="details">
+        <h4>Item details</h4>
         <img :src="Form.img" height="250" width="250" style="border-radius: 30px;">
         <p><strong>Name:</strong> {{Form.name}}</p>
         <p><strong>quantity:</strong> {{Form.order}}</p>
       </div>
-      <v-btn to="/" color="success">Go to homepage</v-btn>
-    </v-container>
-    <v-form v-else v-model="valid">
-      <!--Text fields for input name and image url-->
-      <v-text-field label="Name" required :rules="nameRules" v-model="Form.name"></v-text-field>
-      <v-text-field label="Image url" v-model="Form.img" append-icon="attach_file"><v-icon>image</v-icon> upload a Picture</v-text-field>
+      <router-link to="/">
+      <btn class="btn btn-success" >Go to homepage</btn>
+      </router-link>
+    </div>
+    <form v-else>
+      <div class="form-group">
+        <label for="name">Name: <span style="color: red;">*</span></label>
+        <input id="name" class="form-control" required v-model="Form.name" style="max-width: 400px;" v-on:keyup="checkAll">
+      </div>
+      <div class="form-group">
+        <label for="img"><span class="glyphicon glyphicon-link"></span> Image URl: </label>
+        <input class="form-control" id="img" label="Image url" v-model="Form.img" style="max-width: 400px;" v-on:keyup="checkAll">
+      </div>
       <!-- Field for choosing quantity-->
+      <div class="form-group">
+        <label for="quant">Quantity: <span style="color: red;">*</span></label>
+        <div class="input-group" id="quant">
+          <input type="button" value="-" class="btn btn-default" data-field="quantity" v-on:click="decrementQuantity">
+          <input type="text" step="1" max="50" value="1" name="quantity" id="quantField" v-model="Form.order" v-on:keyup="checkAll">
+          <input type="button" value="+" class="btn btn-default" data-field="quantity" v-on:click="incrementQuantity">
+        </div>
+      </div>
+      <!--<v-slider v-model="Form.order" label="Quantity: " :rules="sliderRules" step="1" :min="1" :max="20" thumb-label="always" ticks></v-slider>-->
       <br>
-      <v-slider v-model="Form.order" label="Quantity: " :rules="sliderRules" step="1" :min="1" :max="20" thumb-label="always" ticks></v-slider>
-      <br>
-      <v-btn @click="submit" :disabled="!valid" color="success">Submit</v-btn>
-    </v-form>
+      <btn @click="submit" :disabled="!valid" class="btn btn-success">Submit</btn>
+    </form>
+    <br><br>
   </div>
 </template>
 
 
 <script>
-import { mask } from 'vue-the-mask';
 import { mapActions } from 'vuex';
 export default {
   name: "Form",
-  directives: {
-    mask,
-  },
   data: () => {
     return {
       //current form values
       Form:{
         name: "",
-        order: Number,
+        order: 1,
         complete: false,
         img: ""
       },
       submitted: false,
-      valid: true,
+      valid: false,
       loading: false,
-      //check if name is not empty and if it is type name is required
-      nameRules: [
-        (name) => !!name || 'Name is required',
-        (name) => name.length > 2 || 'Name must be longer than 2 characters',
-      ],
-      sliderRules: [
-        v => v <= 10 || "you can't afford more than 10!",
-      ],
-
     };
   },
   methods: {
@@ -71,19 +73,69 @@ export default {
       //if so, call revertCall to set it back to false
     },
     ...mapActions(["addToItems"]),
+    decrementQuantity(){
+      if(!isNaN(this.Form.order) && this.Form.order > 1 ) {
+        this.Form.order = Number(this.Form.order) - 1;
+      }
+      this.checkAll();
+    },
+    incrementQuantity(){
+      if(!isNaN(this.Form.order)) {
+        this.Form.order = Number(this.Form.order) + 1;
+      }
+      this.checkAll();
+    },
+    checkAll(){
+      if(!isNaN(this.Form.order) && this.Form.order >= 1 && this.Form.name != "" && this.Form.name.length >= 3){
+        this.valid = true;
+      }
+      else{
+        this.valid = false;
+      }
+    }
   },
+  created() {
+    this.$emit("changeTab", "AddItem");
+  }
 };
 </script>
 
 <style scoped>
 .form-wrapper {
-  padding: 40px;
-  text-align: center;
+  padding: 30px;
 }
 .details {
-  padding-top: 30px;
+  padding-top: 20px;
 }
-h5 {
+h4 {
   padding-bottom: 20px;
+  color: #6699cc;
 }
+
+#quantField{
+  max-width: 50px;
+  text-align: center;
+  border-radius: 5px;
+}
+#quantField:focus{
+  box-shadow: none;
+  border: none;
+}
+.input-group {
+  clear: both;
+  margin: 15px 0;
+  position: relative;
+}
+
+.input-group input[type='button'] {
+  min-width: 35px;
+  width: auto;
+  transition: all 300ms ease;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+}
+
 </style>
