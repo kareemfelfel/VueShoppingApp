@@ -26,9 +26,9 @@
       <div class="form-group">
         <label for="quant">Quantity: <span style="color: red;">*</span></label>
         <div class="input-group" id="quant">
-          <input type="button" value="-" class="btn btn-default" data-field="quantity" v-on:click="decrementQuantity">
-          <input type="text" step="1" max="50" value="1" name="quantity" id="quantField" v-model="Form.order" v-on:keyup="checkAll">
-          <input type="button" value="+" class="btn btn-default" data-field="quantity" v-on:click="incrementQuantity">
+          <input type="button" value="-" class="btn-primary" data-field="quantity" v-on:click="decrementQuantity" style="border-radius: 5px 0px 0px 5px;">
+          <input type="text" step="1" max="50" value="1" name="quantity" id="quantField" v-model="Form.order" v-on:keyup="checkNan">
+          <input type="button" value="+" class=" btn-primary" data-field="quantity" v-on:click="incrementQuantity" style="border-radius: 0px 5px 5px 0px;">
         </div>
       </div>
       <!--<v-slider v-model="Form.order" label="Quantity: " :rules="sliderRules" step="1" :min="1" :max="20" thumb-label="always" ticks></v-slider>-->
@@ -85,13 +85,16 @@ export default {
       }
       this.checkAll();
     },
+    checkNan(){
+      if(isNaN(this.Form.order)){
+        this.Form.order = 0;
+      }
+      this.checkAll();
+    },
     checkAll(){
-      if(!isNaN(this.Form.order) && this.Form.order >= 1 && this.Form.name != "" && this.Form.name.length >= 3){
-        this.valid = true;
-      }
-      else{
-        this.valid = false;
-      }
+      this.valid = !isNaN(this.Form.order) &&
+          this.Form.order >= 1 && this.Form.name != "" &&
+          this.Form.name.length >= 3;
     }
   },
   created() {

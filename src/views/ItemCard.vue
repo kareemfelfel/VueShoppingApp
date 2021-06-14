@@ -6,7 +6,7 @@
     <br>
     <div class="container-fluid text-center">
       <div class="col-xs-12 col-sm-4 col-md-3" v-for="item in incompleteItems" :key="item.id">
-        <app-item :item="item" @completeItem="completeItem" @deleteItem="removeItem"></app-item>
+        <app-item :item="item" @completeItem="completeItem" @deleteItem="removeItem" style="margin-bottom: 25px;"></app-item>
       </div>
     </div>
     <br>

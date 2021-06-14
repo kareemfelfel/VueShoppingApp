@@ -5,7 +5,7 @@
       <h2><span class="glyphicon glyphicon-check" style="color: green;"></span> Your item has been updated!</h2>
       <div class="details">
         <h4>Item details</h4>
-        <img :src="item.img" height="250" width="250" style="border-radius: 30px;">
+        <img :src="item.img" height="250" width="250" class="itemImage">
         <p><strong>Name:</strong> {{item.name}}</p>
         <p><strong>quantity:</strong> {{item.order}}</p>
       </div>
@@ -16,22 +16,22 @@
 
     <form v-else>
       <!--Text fields for input name and image url-->
-      <img :src="item.img" height="250" width="250" style="border-radius: 30px;">
-      <div class="form-group" style="text-align: center;">
+      <img :src="item.img" height="250" width="250" class="itemImage">
+      <div class="form-group myGroup">
         <label for="name">Name: <span style="color: red;">*</span></label>
-        <input class="form-control myInput" id="name" label="Name" :placeholder="item.name" required v-model="item.name" style="max-width: 400px;" v-on:keyup="checkAll">
+        <input class="form-control myInput" id="name" label="Name" :placeholder="item.name" required v-model="item.name" v-on:keyup="checkAll">
       </div>
-      <div class="form-group" style="text-align: center;">
+      <div class="form-group myGroup">
         <label for="img"><span class="glyphicon glyphicon-link"></span> Image URl: </label>
-        <input class="form-control myInput" id="img" label="Image url" :placeholder="item.img" v-model="item.img" style="max-width: 400px;" v-on:keyup="checkAll">
+        <input class="form-control myInput" id="img" label="Image url" :placeholder="item.img" v-model="item.img" v-on:keyup="checkAll">
       </div>
         <!-- Field for choosing quantity-->
-      <div class="form-group" style="text-align: center;">
+      <div class="form-group myGroup">
         <label for="quant">Quantity: <span style="color: red;">*</span></label>
         <div class="input-group" id="quant">
-          <input type="button" value="-" class="btn btn-default" data-field="quantity" v-on:click="decrementQuantity">
+          <input type="button" value="-" class="btn-primary leftBtn" data-field="quantity" v-on:click="decrementQuantity">
           <input type="text" step="1" max="50" value="1" name="quantity" id="quantField" v-model="item.order" v-on:keyup="checkAll">
-          <input type="button" value="+" class="btn btn-default" data-field="quantity" v-on:click="incrementQuantity">
+          <input type="button" value="+" class="btn-primary rightBtn" data-field="quantity" v-on:click="incrementQuantity">
         </div>
       </div>
 
@@ -56,15 +56,6 @@ export default {
       //current form values
       edited: false,
       valid: true,
-      //check if name is not empty and if it is type name is required
-      nameRules: [
-        (name) => !!name || 'Name is required',
-        (name) => name.length > 2 || 'Name must be longer than 2 characters',
-      ],
-      sliderRules: [
-        v => v <= 10 || "you can't afford more than 10!",
-      ],
-
     };
   },
   methods: {
@@ -112,6 +103,18 @@ export default {
 </script>
 
 <style scoped>
+.rightBtn{
+  border-radius: 0px 5px 5px 0px;
+}
+.leftBtn{
+  border-radius: 5px 0px 0px 5px;
+}
+.itemImage{
+  border-radius: 30px;
+}
+.myGroup{
+  text-align: center;
+}
 .form-wrapper {
   padding: 30px;
 }
@@ -125,6 +128,7 @@ h4 {
 .myInput{
   margin: 0 auto;
   display: block;
+  max-width: 400px;
 }
 #quantField{
   max-width: 50px;

@@ -9,7 +9,7 @@
     },
     {
       "name": "Mangoes",
-      "order": 6,
+      "order": 5,
       "complete": true,
       "img": "https://www.purina.ca/sites/g/files/auxxlc601/files/styles/social_share_large/public/Purina-Article-Can-Dogs-Eat-Mangoes_500x300.png?itok=o2neEMK9",
       "id": 2
@@ -51,17 +51,10 @@
     },
     {
       "name": "Apples",
-      "order": 8,
+      "order": 4,
       "complete": false,
       "img": "https://post.healthline.com/wp-content/uploads/2020/09/Do_Apples_Affect_Diabetes_and_Blood_Sugar_Levels-732x549-thumbnail-1-732x549.jpg",
       "id": 8
-    },
-    {
-      "name": "Sample Item",
-      "order": 6,
-      "complete": false,
-      "img": "",
-      "id": 9
     }
   ]
 }
