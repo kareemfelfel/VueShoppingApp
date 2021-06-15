@@ -1,3 +1,4 @@
+<!-- this is only used for the Vuetify project -->
 <template>
   <div class="text-center">
     <v-dialog v-if="dialog" v-model="dialog" hide-overlay persistent width="300">

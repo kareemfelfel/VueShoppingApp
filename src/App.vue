@@ -1,7 +1,6 @@
 <template>
 		<main>
 			<div class="app-container">
-
         <nav class="navbar navbar-inverse">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -22,8 +21,6 @@
             </form>
           </div>
         </nav>
-
-
         <div class="card overflow-hidden">
 
           <div id="scrolling-techniques-3" class="overflow-y-auto" max-height="600">
@@ -36,8 +33,8 @@
         </div>
 
         <!-- Loading bar that loads based on the property of loading in the store.
-        It loads when the store is processing a server request -->
-        <loading-bar :dialog="this.$store.state.loading"></loading-bar>
+        It loads when the store is processing a server request @ONLY USED FOR VUETIFY -->
+        <!-- <loading-bar :dialog="this.$store.state.loading"></loading-bar> -->
         <!-- Error box that displays an error when it occurs in the server -->
         <error-box></error-box>
 			</div>
@@ -47,7 +44,6 @@
 
 <script>
 import { mapActions } from 'vuex';
-import Loading from "@/components/loading";
 import ErrorBox from "@/components/errorbox";
 export default {
   name: "App",
@@ -58,7 +54,6 @@ export default {
     };
   },
   components:{
-    loadingBar: Loading,
     errorBox: ErrorBox
   },
   computed: {

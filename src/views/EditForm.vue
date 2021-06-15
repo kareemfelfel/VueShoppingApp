@@ -30,7 +30,7 @@
         <label for="quant">Quantity: <span style="color: red;">*</span></label>
         <div class="input-group" id="quant">
           <input type="button" value="-" class="btn-primary leftBtn" data-field="quantity" v-on:click="decrementQuantity">
-          <input type="text" step="1" max="50" value="1" name="quantity" id="quantField" v-model="item.order" v-on:keyup="checkAll">
+          <input type="text" step="1" max="50" value="1" name="quantity" id="quantField" v-model="item.order" v-on:keyup="checkNan">
           <input type="button" value="+" class="btn-primary rightBtn" data-field="quantity" v-on:click="incrementQuantity">
         </div>
       </div>
@@ -76,6 +76,12 @@ export default {
     incrementQuantity(){
       if(!isNaN(this.item.order)) {
         this.item.order = Number(this.item.order) + 1;
+      }
+      this.checkAll();
+    },
+    checkNan(){
+      if(isNaN(this.item.order)){
+        this.item.order = 0;
       }
       this.checkAll();
     },

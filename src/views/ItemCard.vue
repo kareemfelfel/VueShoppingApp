@@ -6,7 +6,7 @@
     <br>
     <div class="container-fluid text-center">
       <div class="col-xs-12 col-sm-4 col-md-3" v-for="item in incompleteItems" :key="item.id">
-        <app-item :item="item" @completeItem="completeItem" @deleteItem="removeItem" style="margin-bottom: 25px;"></app-item>
+        <app-item :item="item" @completeItem="completeItem" @deleteItem="handleDelete" style="margin-bottom: 25px;"></app-item>
       </div>
     </div>
     <br>
@@ -15,13 +15,15 @@
     <br>
     <div class="container-fluid text-center">
       <div class="col-xs-12 col-sm-4 col-md-3" v-for="item in completeItems" :key="item.id">
-        <app-item :item="item" @completeThisItem="completeItem" @deleteItem="removeItem" style="margin-bottom: 25px;"></app-item>
+        <app-item :item="item" @completeThisItem="completeItem" @deleteItem="handleDelete" style="margin-bottom: 25px;"></app-item>
       </div>
     </div>
+    <delete-modal :deleteTrigger="deleteTrigger" @cancelDelete="cancelDelete" @confirmDelete="confirmDelete"></delete-modal>
   </div>
 </template>
 <script>
 import Item from '../components/item.vue';
+import deleteModal from '../components/confirmationmodal';
 import axios from 'axios';
 //base URL that we'll be calling
 axios.defaults.baseURL = 'http://localhost:3000';
@@ -29,9 +31,12 @@ import { mapActions } from 'vuex';
 export default {
   components: {
     appItem: Item,
+    deleteModal: deleteModal,
   },
   data() {
     return {
+      deleteTrigger: false,
+      itemToDelete: Object,
     };
   },
   created() {
@@ -57,7 +62,22 @@ export default {
     ...mapActions(["clearItems"]),
     ...mapActions(["removeItem"]),
     ...mapActions(["loadAllItems"]),
-    ...mapActions(["revertCallState"]),
+    displayDeleteModal(val){
+      this.deleteTrigger = val;
+    },
+    handleDelete(item){
+      this.itemToDelete = item;
+      this.displayDeleteModal(true);
+    },
+    cancelDelete(){
+      this.itemToDelete = Object;
+      this.displayDeleteModal(false);
+    },
+    confirmDelete(){
+      this.removeItem(this.itemToDelete);
+      this.displayDeleteModal(false);
+      this.itemToDelete = Object;
+    }
   }
 
 };

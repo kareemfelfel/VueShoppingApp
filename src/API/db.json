@@ -8,8 +8,8 @@
       "id": 1
     },
     {
-      "name": "Mangoes",
-      "order": 5,
+      "name": "Mangoessssssss",
+      "order": 3,
       "complete": true,
       "img": "https://www.purina.ca/sites/g/files/auxxlc601/files/styles/social_share_large/public/Purina-Article-Can-Dogs-Eat-Mangoes_500x300.png?itok=o2neEMK9",
       "id": 2
@@ -44,17 +44,10 @@
     },
     {
       "name": "Bananas",
-      "order": 3,
+      "order": 2,
       "complete": false,
       "img": "https://images.everydayhealth.com/images/diet-nutrition/all-about-bananas-nutrition-facts-health-benefits-recipes-and-more-rm-722x406.jpg",
       "id": 7
-    },
-    {
-      "name": "Apples",
-      "order": 4,
-      "complete": false,
-      "img": "https://post.healthline.com/wp-content/uploads/2020/09/Do_Apples_Affect_Diabetes_and_Blood_Sugar_Levels-732x549-thumbnail-1-732x549.jpg",
-      "id": 8
     }
   ]
 }
